@@ -12,6 +12,18 @@ $db = new Database();
 
 $pdo = $db->spojenie();
 $userRepo =new UserRepository($pdo);
+/*
+$user = $userRepo->findByUsername("Majo");
+var_dump($user);
+*/
+$user = new User("Fero","Fero","admin",false);
+
+$userRepo->save($user);
+
+if($user = $userRepo->findByUsername("Fero")){
+    $user->setUsername("Stano");
+    $userRepo->update($user);
+}
 
 
 // //var_dump($pdo);
