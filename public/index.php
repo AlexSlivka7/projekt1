@@ -12,26 +12,26 @@ $db = new Database();
 
 $pdo = $db->spojenie();
 $userRepo =new UserRepository($pdo);
-/*
-$user = $userRepo->findByUsername("Majo");
-var_dump($user);
-*/
+
 $user = new User("Fero","Fero","admin",false);
 
 $userRepo->save($user);
 
-if($user = $userRepo->findByUsername("Fero")){
-    $user->setUsername("Stano");
+$user = $userRepo->findByUsername("Stano");
+
+if($user){
+
+    $user->setUsername("Peter");
+
     $userRepo->update($user);
+
+    echo "Používateľ bol upravený";
+}
+else{
+    echo "Používateľ neexistuje";
 }
 
+// $userRepo->delete(7);
 
-// //var_dump($pdo);
-
-// $user = new User("Miro","Miro","user",false);
-// //var_dump($user);
-
-// $user->SetUsername("Alexandra");
-// var_dump($user);
 
 ?>

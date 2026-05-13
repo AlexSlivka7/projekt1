@@ -64,15 +64,20 @@ class UserRepository
     public function update(User $user) :bool{
         try{
 
-            $sql = "UPDATE users SET username=:username,password=:password,
-            role=:role,created_at=:created_at WHERE id=:id";
+            $sql = "UPDATE users SET username=:username,
+            password=:password,
+            role=:role,
+            created_at=:created_at
+            WHERE id=:id";
+           
             $stmt = $this->db->prepare($sql);
 
             $result = $stmt->execute([
                 ":username" => $user->getUsername(),
                 ":password" => $user->getPassword(),
                 ":role" => $user->getRole(),
-                ":created_at" => $user->getCreatedAt()]);
+                ":created_at" => $user->getCreatedAt(),
+                ":id" => $user->getId()]);
 
             
             return $result;
@@ -84,7 +89,19 @@ class UserRepository
     }
 
     public function delete(int $id) :bool{
+        try{
+            $sql ="DELETE FROM users WHERE id=:id";
 
+            $stmt = $this->db->prepare($sql);
+
+            $result = $stmt->execute([
+                ":id" => $id]);
+
+            return $result;
+        }
+        catch(PDOException $e){
+            return false;
+        }
     }
 }
 
