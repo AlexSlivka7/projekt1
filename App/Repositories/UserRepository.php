@@ -103,6 +103,39 @@ class UserRepository
             return false;
         }
     }
+
+    public function findAll() :array {
+        try{
+            $uzivatelia = [];
+
+            $sql = "SELECT * FROM users";
+
+            $stmt = $this->db->prepare($sql);
+
+            $result = $stmt->execute();
+               
+
+            while ($row = $stmt->fetch()) {
+                $user = new User(
+                $row ["username"],
+                $row ["password"],
+                $row ["role"],
+                true);
+                
+            
+                $user->setId((int)$row["id"]);
+                $user->setCreatedAt($row["created_at"]);
+                $uzivatelia[] = $user;
+            };
+            
+            return $uzivatelia;
+               
+            }
+            catch(PDOException $e){
+                return null;
+            }
+    }
+
 }
 
 ?>

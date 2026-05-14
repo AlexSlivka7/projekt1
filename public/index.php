@@ -8,28 +8,35 @@ use App\Core\Database;
 use App\Repositories\UserRepository;
 use App\Models\User;
 
+
 $db = new Database();
 
 $pdo = $db->spojenie();
 $userRepo =new UserRepository($pdo);
 
-$user = new User("Fero","Fero","admin",false);
+// $user = new User("Fero","Fero","admin",false);
 
-$userRepo->save($user);
+// $userRepo->save($user);
 
-$user = $userRepo->findByUsername("Stano");
+// $user = $userRepo->findByUsername("Stano");
 
-if($user){
+// if($user){
 
-    $user->setUsername("Peter");
+//     $user->setUsername("Peter");
 
-    $userRepo->update($user);
+//     $userRepo->update($user);
 
-    echo "Používateľ bol upravený";
-}
-else{
-    echo "Používateľ neexistuje";
-}
+//     echo "Používateľ bol upravený";
+// }
+// else{
+//     echo "Používateľ neexistuje";
+// }
+
+$users = $userRepo->findAll();
+
+include __DIR__."/../view/home.php";
+
+// var_dump($user2);
 
 // $userRepo->delete(7);
 
