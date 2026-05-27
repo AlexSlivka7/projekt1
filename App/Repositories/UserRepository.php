@@ -36,8 +36,32 @@ class UserRepository
         catch(PDOException $e){
             return null;
         }
+
+    
         
     }
+
+    public function findById(int $id) : ?User
+    {
+        try{
+            $user = null;
+            
+            $sql = "SELECT * FROM users WHERE id = :id LIMIT 1";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->execute([":id" => $id]);
+            if($row=$stmt->fetch()) {
+                $user = new User($row["username"],$row["password"],$row["role"],true);
+                $user->setId((int)$row["id"]);
+                $user->setCreatedAt($row["created_at"]);
+                return $user;
+            }
+            return null;
+        }
+        catch(PDOException $e){
+            return null;
+        }
+        
     public function save(User $user):bool{
 
         try{
@@ -52,7 +76,7 @@ class UserRepository
                 ":role" => $user->getRole()]);
 
             if($result){
-                $user->setId((int)$this->db->lastInsertedId());
+                $user->setId((int)$this->db->lastInsertId());
             }
             return $result;
         }

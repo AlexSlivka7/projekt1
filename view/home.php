@@ -1,10 +1,29 @@
 <?php 
 
+  use App\Models\User;
+  use App\Repositories\UserRepository;
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"]) && $_POST["action"] === "delete"){
 
-      delete($_POST["id"]);
+      $userRepo->delete($_POST["id"]);
   
-  header("Location: index.php");
+  header("Location: home.php");
+  exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"]) && $_POST["action"] ==="save") {
+
+    $user = new User($_POST["username"],$_POST["password"]);
+    $userRepo ->save($user);
+  
+  header("Location: home.php");
+  exit();
+
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"]) && $_POST["action"] === "info") {
+ 
+  header("Location: info.php");
   exit();
 }
 
@@ -24,9 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"]) && $_POST["
     <div class="container">
     <div class="wraper py-3">
 
-    <form action="" method="POST">
+    <form action="#" method="post">
         <div class="row">
             <div class="col">
+            <input type="hidden" name="action" value="save">
+
             <div class="mb-3">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>  
             </div>
@@ -34,11 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"]) && $_POST["
 
             <div class="col">
             <div class="mb-3">
-                <input type="text" class="form-control" id="role" name="role" placeholder="Role" required>  
+                <input type="text" class="form-control" id="password" name="password" placeholder="Password" required>  
             </div>
             </div>
 
             <div class="col">
+            
             <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </div>
