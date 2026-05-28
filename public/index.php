@@ -7,37 +7,25 @@ session_start();
 use App\Core\Database;
 use App\Repositories\UserRepository;
 use App\Models\User;
+use App\Core\Router;
+use App\Controllers\UserController;
 
 
 $db = new Database();
 
 $pdo = $db->spojenie();
 $userRepo =new UserRepository($pdo);
+$userController = new UserController($userRepo);
 
-//  $user = new User("Jano","Jano","user",false);
-//  $userRepo->save($user);
+$router = new Router();
+$router->add("/",$userController,"index");
+$router->add("/login",$userController,"login");
+$router->add("/register",$userController,"register");
+$router->add("/dashboard",$userController,"dashboard");
 
-// $user = $userRepo->findByUsername("Stano");
 
-// if($user){
 
-//     $user->setUsername("Peter");
-
-//     $userRepo->update($user);
-
-//     echo "Používateľ bol upravený";
-// }
-// else{
-//     echo "Používateľ neexistuje";
-// }
-
-$users = $userRepo->findAll();
-
-include __DIR__."/../view/home.php";
-
-// var_dump($user2);
-
-// $userRepo->delete(7);
+$router->resolve();
 
 
 ?>

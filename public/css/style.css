@@ -1,0 +1,14 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+form{
+    width: 650px;
+    border: 1px, solid #bababa;
+    padding: 40px 60px;
+    border-radius: 8px;
+}
