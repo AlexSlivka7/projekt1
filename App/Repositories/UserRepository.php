@@ -61,6 +61,7 @@ class UserRepository
         catch(PDOException $e){
             return null;
         }
+    }
         
     public function save(User $user):bool{
 
