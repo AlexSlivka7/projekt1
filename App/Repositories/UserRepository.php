@@ -41,27 +41,27 @@ class UserRepository
         
     }
 
-    public function findById(int $id) : ?User
-    {
-        try{
-            $user = null;
+    // public function findById(int $id) : ?User
+    // {
+    //     try{
+    //         $user = null;
             
-            $sql = "SELECT * FROM users WHERE id = :id LIMIT 1";
-            $stmt = $this->db->prepare($sql);
+    //         $sql = "SELECT * FROM users WHERE id = :id LIMIT 1";
+    //         $stmt = $this->db->prepare($sql);
 
-            $stmt->execute([":id" => $id]);
-            if($row=$stmt->fetch()) {
-                $user = new User($row["username"],$row["password"],$row["role"],true);
-                $user->setId((int)$row["id"]);
-                $user->setCreatedAt($row["created_at"]);
-                return $user;
-            }
-            return null;
-        }
-        catch(PDOException $e){
-            return null;
-        }
-    }
+    //         $stmt->execute([":id" => $id]);
+    //         if($row=$stmt->fetch()) {
+    //             $user = new User($row["username"],$row["password"],$row["role"],true);
+    //             $user->setId((int)$row["id"]);
+    //             $user->setCreatedAt($row["created_at"]);
+    //             return $user;
+    //         }
+    //         return null;
+    //     }
+    //     catch(PDOException $e){
+    //         return null;
+    //     }
+    // }
         
     public function save(User $user):bool{
 
